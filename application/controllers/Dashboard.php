@@ -19,7 +19,13 @@ class Dashboard extends CI_Controller {
 	 * @see https://codeigniter.com/userguide3/general/urls.html
 	 */
 	public function index()
-	{
+	{	
+
+		$this->load->view('template/template_header');
+
+		// Main content
 		$this->load->view('dashboard/view_dashboard');
+
+		$this->load->view('template/template_footer');
 	}
 }
