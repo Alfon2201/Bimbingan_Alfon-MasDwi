@@ -55,7 +55,8 @@ License: You must have a valid license purchased only from themeforest(the above
 						<!--begin::Signin-->
 						<div class="login-form">
 							<!--begin::Form-->
-							<form class="form" id="kt_login_singin_form" action="">
+							<form class="form"  action="<?=site_url('auth/process')?>" method="post">
+							
 								<!--begin::Title-->
 								<div class="pb-5 pb-lg-15">
 									<h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg">Halaman Login</h3>
@@ -65,7 +66,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<!--begin::Title-->
 								<!--begin::Form group-->
 								<div class="form-group">
-									<label class="font-size-h6 font-weight-bolder text-dark">Masukkan Email</label>
+									<label class="font-size-h6 font-weight-bolder text-dark">Masukkan username</label>
 									<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0" type="text" name="username" autocomplete="off" />
 								</div>
 								<!--end::Form group-->
@@ -80,7 +81,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<!--end::Form group-->
 								<!--begin::Action-->
 								<div class="pb-lg-0 pb-5">
-									<button type="submit" id="kt_login_singin_form_submit_button" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Sign In</button>
+									<button type="submit" name="login"  class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Sign In</button>
 									
 								</div>
 								<!--end::Action-->

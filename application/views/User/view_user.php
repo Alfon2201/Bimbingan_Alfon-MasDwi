@@ -84,7 +84,7 @@
 											</div>
 											<!--end::Dropdown-->
 											<!--begin::Button-->
-											<a href="<?=site_url('user_c/tambah')?>" class="btn btn-primary font-weight-bolder">
+											<a href="<?=site_url('user/add')?>" class="btn btn-primary font-weight-bolder">
 											<span class="svg-icon svg-icon-md">
 												<!--begin::Svg Icon | path:<?php echo base_url() ?>assets/media/svg/icons/Design/Flatten.svg-->
 												<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -101,44 +101,43 @@
 									</div>
 									<div class="card-body">
 										<!--begin: Datatable-->
-                                        
-                                        <table class="table table-separate table-head-custom table-checkable" id="kt_datatable1">
-                                       <thead>
+                                       
+										<table class="table table-separate table-head-custom table-checkable" id="kt_datatable1">
+											<thead>
 												<tr>
 													<th>No</th>
-													<th>kode Barang</th>
-													<th>Nama Barang</th>
-													<th>Nama Satuan</th>
-													<th>stok</th>				
-													<th>Harga beli</th>
-													<th>Harga Jual</th>
+													<th>Nama</th>
+													<th>Username</th>
+													<th>Level</th>
+													<th>Alamat</th>				
+													<th>No Telepon</th>
+													<th>Dibuat</th>
 													<th>Action</th>
 												</tr>
 											</thead>
 											<tbody>
-                                                                                                                                       
-                                            
-											<?php $no =1 ; 
+                                                <?php $no =1 ; 
                                                 foreach($row->result() as $key => $data){?>
 												<tr>
 													<td><?=$no++?></td>
-													<td><?=$data->kode_barang?></td>
-													<td><?=$data->nama_barang?></td>
-													
-														
-													<td><?=$data->nama_satuan?></td>
-													<td><?=$data->stok?></td>
-													<td><?=$data->harga_beli?></td>
-													<td><?=$data->harga_jual?></td>
-                                                    
-                                                   
+                                                    <td><?=$data->nama?></td>
+                                                    <td><?=$data->username?></td>
+													<td><?=$data->level?></td>
+                                                    <td><?=$data->alamat?></td>
+                                                    <td><?=$data->no_telp?></td>
+                                                    <td><?=$data->dibuat_pada?></td>
+                                                    <td class=" text-center" width="160px">
+                                                        <a href="<?=site_url('user/edit')?>" class= "btn btn-primary btn-xs">
+                                                            <i class="fa fa-pencil-alt"> </i> Update
+                                                          </a>
+                                                    </td>
+                                                    <td class=" text-center" width="160px">
+                                                        <a href="<?=site_url('user/edit')?>" class= "btn btn-danger btn-xs">
+                                                            <i class="fa fa-trash"> </i> Delete
+                                                          </a>
                                                     </td>
 												</tr>
-												<?php }?>
-											
-												
-												
-											
+												<?php } ?>
 												
 											</tbody>
 										</table>

@@ -20,6 +20,7 @@ class Dashboard extends CI_Controller {
 	 */
 	public function index()
 	{	
+		check_not_login();
 
 		$this->load->view('template/template_header');
 

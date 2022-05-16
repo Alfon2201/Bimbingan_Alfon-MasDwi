@@ -106,36 +106,44 @@
                                        <thead>
 												<tr>
 													<th>No</th>
-													<th>kode Barang</th>
-													<th>Nama Barang</th>
-													<th>Nama Satuan</th>
-													<th>stok</th>				
-													<th>Harga beli</th>
-													<th>Harga Jual</th>
+													<th>Nama</th>
+													<th>Username</th>
+													<th>Level</th>
+													<th>Alamat</th>				
+													<th>No Telepon</th>
+													<th>Dibuat</th>
 													<th>Action</th>
 												</tr>
 											</thead>
 											<tbody>
                                                                                                                                        
-                                            
-											<?php $no =1 ; 
-                                                foreach($row->result() as $key => $data){?>
+                                            <?php  $no=1; 
+                                                foreach($row->result() as $key => $data){?> 
 												<tr>
 													<td><?=$no++?></td>
-													<td><?=$data->kode_barang?></td>
-													<td><?=$data->nama_barang?></td>
-													
-														
-													<td><?=$data->nama_satuan?></td>
-													<td><?=$data->stok?></td>
-													<td><?=$data->harga_beli?></td>
-													<td><?=$data->harga_jual?></td>
+                                                    <td><?=$data->nama?></td>
+                                                    <td><?=$data->username?></td>
+													<td><?=$data->level?></td>
+                                                    <td><?=$data->alamat?></td>
+                                                    <td><?=$data->no_telp?></td>
+                                                    <td><?=$data->dibuat_pada?></td>
+                                                    <td class=" text-center" width="160px">
+                                                        <a href="<?=site_url('user_c/edit/'.$data->id_user)?>" class= "btn btn-primary btn-xs">
+                                                            <i class="fa fa-pencil-alt"> </i> Update
+                                                          </a>
+                                                    </td>
+                                                    <td class=" text-center" width="160px">
+                                                    <form action="<?=site_url('user_c/del')?>" method="post">
+                                                        <input type="hidden" name="id_user" value="<?=$data->id_user?>">
+                                                         <button onclick="return confirm('apakah ada akan menghapus data?')" class= "btn btn-danger btn-xs">
+                                                            <i class="fa fa-trash"> </i> Delete
+                                                            </button>
+                                               
                                                     
-                                                   
+                                                    </form>
                                                     </td>
 												</tr>
-												<?php }?>
-											
+												<?php } ?>
 												
 												
 											
