@@ -8,7 +8,7 @@ class Barang_m extends CI_Model{
         $this->db->from('tb_barang');
         $this->db->join('tb_satuan', 'tb_satuan.id_satuan =tb_barang.id_satuan');
         if($id != null){
-            $this->db-> where('kode_barang');
+            $this->db-> where('kode_barang', $id);
         }
         $query = $this->db->get();
         return $query;

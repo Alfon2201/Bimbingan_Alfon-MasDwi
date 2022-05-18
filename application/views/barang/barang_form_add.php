@@ -74,7 +74,7 @@
                                                 <select name="satuan" class="form-control">
                                                     <option value="">pilih</option>
                                                     <?php foreach($row->result() as $key => $data){?>
-                                                        <option value=" "><?=$data->nama_satuan?></option>
+                                                        <option value="<?= $data->id_satuan ?>"><?=$data->nama_satuan?></option>
                                                         <?php }?>
 
                                                 </select>
