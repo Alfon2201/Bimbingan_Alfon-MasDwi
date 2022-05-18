@@ -9,13 +9,13 @@
 								<div class="card card-custom gutter-b">
 									<div class="card-header flex-wrap border-0 pt-6 pb-0">
 										<div class="card-title">
-											<h3 class="card-label">Edit Data User
-											<span class="d-block text-muted pt-2 font-size-sm">Edit Data User </span></h3>
+											<h3 class="card-label">Data Barang
+											<span class="d-block text-muted pt-2 font-size-sm">Tambah Data Barang </span></h3>
 										</div>
 										<div class="card-toolbar">
 											
 											<!--begin::Button-->
-											<a href="<?=site_url('user_c')?>" class="btn btn-warning btn-flat">
+											<a href="<?=site_url('barang')?>" class="btn btn-warning btn-flat">
 											<span class="svg-icon svg-icon-md">
 												<!--begin::Svg Icon | path:<?php echo base_url() ?>assets/media/svg/icons/Design/Flatten.svg-->
 												<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -38,7 +38,7 @@
                                     <div class="card card-custom">
                                         <div class="card-header">
                                              <h3 class="card-title">
-                                                 Edit Data User
+                                                 Tambah Data Barang
                                              </h3>
                                                 <div class="card-toolbar">
                                                     <div class="example-tools justify-content-center">
@@ -50,43 +50,47 @@
                                         <!--begin::Form-->
 
                                          <?php //echo validation_errors(); ?>
-                                        <?php echo validation_errors()?>
+                                        
                                         <form action="" method="post">
                                         <div class="card-body">
                                             <div class="form-group">
-                                                <input type="hidden" name="id_user" value="<?=$row->id_user?>">
-                                                <label>Nama Lengkap <span class="text-danger">*</span> </label>
-                                                <input type="text" name="fullname" value="<?=$this->input->post('fullname')?? $row->nama ?>" class="form-control">  
+                                                <label> Kode Barang <span class="text-danger">*</span> </label>
+                                                <input type="text" name="kode" value="<?=set_value('kode')?>" class="form-control">  
+                                                <?=form_error('kode')?>
                                             </div>
                                             <div class="form-group">
-                                                <label>Username <span class="text-danger">*</span> </label>
-                                                <input type="text" name="username" value="<?=$this->input->post('username')?? $row->username?>" class="form-control">  
+                                                <label> Nama Barang <span class="text-danger">*</span> </label>
+                                                <input type="text" name="barang" value="<?=set_value('barang')?>" class="form-control">
+                                                <?=form_error('barang')?>  
                                             </div>
                                             <div class="form-group">
-                                                <label>Password  </label> <small> (biarkan kosong jika tidak diganti)</small>   
-                                                <input type="password" name="password" value="<?=$this->input->post('password')?>" class="form-control">  
+                                                <label>Stok <span class="text-danger">*</span> </label>
+                                                <input type="text" name="stok" value="<?=set_value('stok')?>" class="form-control">
+                                                <?=form_error('stok')?>  
                                             </div>
+                                                                                       
                                             <div class="form-group">
-                                                <label>Konfirmasi Password  </label><small> (biarkan kosong jika tidak diganti)</small>
-                                                <input type="password" name="passconf" value="<?=$this->input->post('passconf')?>" class="form-control">  
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Jabatan  </label>
-                                                <select name="level" class="form-control">
-                                                    <?php $level = $this->input->post('level') ?? $row->level ?>
-                                                    <option value="Admin" >Admin</option>
-                                                    <option value="Pegawai" <?=$level == "Pegawai" ? 'selected' : null ?>>Pegawai</option>
+                                                <label>Satuan <span class="text-danger">*</span> </label>
+                                                <select name="satuan" class="form-control">
+                                                    <option value="">pilih</option>
+                                                    <?php foreach($row->result() as $key => $data){?>
+                                                        <option value=" "><?=$data->nama_satuan?></option>
+                                                        <?php }?>
 
                                                 </select>
+                                                <?=form_error('satuan')?>
                                             </div>
                                             <div class="form-group">
-                                                <label>Alamat</label>
-                                                <textarea  name="address"  class="form-control"<?=$this->input->post('address')?? $row->alamat?>>  </textarea>
+                                                <label>Harga Beli</label>
+                                                <textarea  name="beli"  class="form-control" value="<?=set_value('beli')?>">  </textarea>
+                                                <?=form_error('beli')?>
                                             </div>
                                             <div class="form-group">
-                                                <label>Nomer Telepon  </label>
-                                                <input type="text" name="no" value="<?=$this->input->post('no')?? $row->no_telp?>" class="form-control">  
+                                                <label>Harga Jual <span class="text-danger">*</span> </label>
+                                                <input type="text" name="jual" value="<?=set_value('jual')?>" class="form-control">  
+                                                <?=form_error('jual')?>
                                             </div>
+                                            
                                         </div>
                                         <div class="card-footer">
                                                     <button type="submit" class="btn btn-success mr-2" ><i class="fa fa-paper-plane"></i>Save</button>
