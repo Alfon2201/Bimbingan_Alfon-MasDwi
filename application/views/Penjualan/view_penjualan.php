@@ -106,12 +106,10 @@
                                        <thead>
 												<tr>
 													<th>No</th>
-													<th>kode Barang</th>
-													<th>Nama Barang</th>
-													<th>Nama Satuan</th>
-													<th>stok</th>				
-													<th>Harga beli</th>
-													<th>Harga Jual</th>
+													<th>kode Transaksi</th>
+                                                    <th>Tanggal</th>
+													<th>Total</th>
+													
 													<th>Action</th>
 												</tr>
 											</thead>
@@ -124,20 +122,17 @@
 													<td><?=$no++?></td>
 													<td><?=$data->kode_barang?></td>
 													<td><?=$data->nama_barang?></td>
-													<td><?=$data->nama_satuan?></td>
-													<td><?=$data->stok?></td>
-													<td><?=$data->harga_beli?></td>
-													<td><?=$data->harga_jual?></td>
-                                                    
+													<td><?=$data->nama_barang?></td>
+												</td>
+													
                                                    
-                                                    </td>
+                                                    
 													<td class=" text-center" width="160px">
-                                                        <a href="<?=site_url('barang/edit/'.$data->kode_barang)?>" class= "btn btn-primary btn-xs">
-                                                            <i class="fa fa-pencil-alt"> </i> Update
+                                                    <a href="<?=site_url('penjualan/tampil')?>" class= "btn btn-primary btn-xs">
+                                                            <i class="fa fa-pencil-alt"> </i> view
                                                           </a>
-                                                    </td>
-													<td class=" text-center" width="160px">
-                                                    <form action="<?=site_url('barang/del')?>" method="post">
+
+                                                    <form action="<?=site_url('')?>" method="post">
                                                         <input type="hidden" name="kode_barang" value="<?=$data->kode_barang?>">
                                                          <button onclick="return confirm('apakah ada akan menghapus data?')" class= "btn btn-danger btn-xs">
                                                             <i class="fa fa-trash"> </i> Delete

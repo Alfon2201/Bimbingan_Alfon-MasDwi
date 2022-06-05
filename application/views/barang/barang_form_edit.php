@@ -9,8 +9,8 @@
 								<div class="card card-custom gutter-b">
 									<div class="card-header flex-wrap border-0 pt-6 pb-0">
 										<div class="card-title">
-											<h3 class="card-label">Data Barang
-											<span class="d-block text-muted pt-2 font-size-sm">Tambah Data Barang </span></h3>
+											<h3 class="card-label">Edit Data User
+											<span class="d-block text-muted pt-2 font-size-sm">Edit Data User </span></h3>
 										</div>
 										<div class="card-toolbar">
 											
@@ -38,7 +38,7 @@
                                     <div class="card card-custom">
                                         <div class="card-header">
                                              <h3 class="card-title">
-                                                 Edit Data Barang
+                                                 Edit Data User
                                              </h3>
                                                 <div class="card-toolbar">
                                                     <div class="example-tools justify-content-center">
@@ -50,47 +50,40 @@
                                         <!--begin::Form-->
 
                                          <?php //echo validation_errors(); ?>
-                                        
+                                        <?php echo validation_errors()?>
                                         <form action="" method="post">
                                         <div class="card-body">
                                             <div class="form-group">
-                                                <label> Kode Barang <span class="text-danger">*</span> </label>
-                                                <input type="text" name="kode" value="<?=set_value('kode')?>" class="form-control">  
-                                                <?=form_error('kode')?>
+                                                <input type="hidden" name="kode_barang" value="<?=$row->kode_barang?>">
+                                                <label>Kode Barang <span class="text-danger">*</span> </label>
+                                                <input type="text" name="kode" value="<?=$this->input->post('kode')?? $row->kode_barang ?>" class="form-control">  
                                             </div>
                                             <div class="form-group">
-                                                <label> Nama Barang <span class="text-danger">*</span> </label>
-                                                <input type="text" name="barang" value="<?=set_value('barang')?>" class="form-control">
-                                                <?=form_error('barang')?>  
+                                                <label>Nama Barang <span class="text-danger">*</span> </label>
+                                                <input type="text" name="barang" value="<?=$this->input->post('nama_barang')?? $row->nama_barang?>" class="form-control">  
                                             </div>
                                             <div class="form-group">
-                                                <label>Stok <span class="text-danger">*</span> </label>
-                                                <input type="text" name="stok" value="<?=set_value('stok')?>" class="form-control">
-                                                <?=form_error('stok')?>  
-                                            </div>
-                                                                                       
-                                            <div class="form-group">
-                                                <label>Satuan <span class="text-danger">*</span> </label>
+                                                <label>Satuan </label>
                                                 <select name="satuan" class="form-control">
-                                                    <option value="">pilih</option>
-                                                    <option value="">1</option>
-                                                    <?php foreach($row->result() as $key => $data){?>
-                                                        <option value=" "><?=$data->nama_satuan?></option>
+                                                <?php foreach($row_satuan->result() as $key => $data){?>
+                                                        <option value="<?= $data->id_satuan ?>"  <?php if ( $row->id_satuan == $data->id_satuan ) { echo 'selected="selected"'; }  ?>  ><?=$data->nama_satuan?></option>
                                                         <?php }?>
 
                                                 </select>
-                                                <?=form_error('satuan')?>
                                             </div>
                                             <div class="form-group">
-                                                <label>Harga Beli</label>
-                                                <textarea  name="beli"  class="form-control" value="<?=set_value('beli')?>">  </textarea>
-                                                <?=form_error('beli')?>
+                                                <label>Stok Barang <span class="text-danger">*</span> </label>
+                                                <input type="text" name="stok" value="<?=$this->input->post('stok')?? $row->stok?>" class="form-control">  
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Harga Beli <span class="text-danger">*</span> </label>
+                                                <input type="text" name="beli" value="<?=$this->input->post('beli')?? $row->harga_beli?>" class="form-control">  
                                             </div>
                                             <div class="form-group">
                                                 <label>Harga Jual <span class="text-danger">*</span> </label>
-                                                <input type="text" name="jual" value="<?=set_value('jual')?>" class="form-control">  
-                                                <?=form_error('jual')?>
+                                                <input type="text" name="jual" value="<?=$this->input->post('jual')?? $row->harga_jual?>" class="form-control">  
                                             </div>
+                                            
                                             
                                         </div>
                                         <div class="card-footer">

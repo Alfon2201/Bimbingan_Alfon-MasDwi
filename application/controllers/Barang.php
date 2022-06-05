@@ -18,7 +18,11 @@
         public function tambah()
         {	
             $this->load->model('barang_m');
+            $this->load->model('satuan_m');
+
             $data['row'] =$this->barang_m->get();
+            $data['row_satuan'] =$this->satuan_m->get();
+
             //print_r($_POST['level']);
             $this->load->library('form_validation');
             $this->form_validation->set_rules('kode','Kode Barang','required');
@@ -59,7 +63,10 @@
     public function edit($id)
 	{	
         $this->load->model('barang_m');
+        $this->load->model('satuan_m');
+
         $data['row'] =$this->barang_m->get();
+        $data['row_satuan'] =$this->satuan_m->get();
         //print_r($_POST['level']);
         $this->load->library('form_validation');
         $this->form_validation->set_rules('kode','Kode Barang','required');
@@ -102,7 +109,23 @@
                     
             }
     }
-
+    public function del()
+    {	
+        $this->load->model('barang_m');
+        $id = $this->input->post('kode_barang');
+        $data['row'] =$this->barang_m->get();
+        
+        $this->barang_m->del($id);
+        // if($this->db->affected_rows() >0)
+        // {
+           
+        // }
+        // echo "<script> 
+        //         alert('Data Berhasil Dihapus');
+        //     </script";
+        echo "<script>window.location='" .site_url('barang'). "';</script>"; 
+        
+    }
 
 
 

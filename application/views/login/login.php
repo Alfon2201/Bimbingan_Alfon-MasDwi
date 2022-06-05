@@ -60,8 +60,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<!--begin::Title-->
 								<div class="pb-5 pb-lg-15">
 									<h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg">Halaman Login</h3>
-									<div class="text-muted font-weight-bold font-size-h4">Buat Baru?
-									<a href="custom/pages/login/login-4/signup.html" class="text-primary font-weight-bolder">Buat Akun</a></div>
+									
 								</div>
 								<!--begin::Title-->
 								<!--begin::Form group-->
@@ -74,7 +73,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<div class="form-group">
 									<div class="d-flex justify-content-between mt-n5">
 										<label class="font-size-h6 font-weight-bolder text-dark pt-5">Masukkan Password </label>
-										<a href="custom/pages/login/login-4/forgot.html" class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5">Lupa Password ?</a>
+										
 									</div>
 									<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0" type="password" name="password" autocomplete="off" />
 								</div>

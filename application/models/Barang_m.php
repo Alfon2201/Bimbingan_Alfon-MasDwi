@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Barang_m extends CI_Model{
-
+    
     public function get($id = null)
     {
         $this->db->from('tb_barang');
@@ -36,6 +36,12 @@ class Barang_m extends CI_Model{
         $params ['harga_jual'] = $post['jual'];
         $this->db->where('kode_barang',$post['kode_barang']);
         $this->db->update('tb_barang',$params);
+
+    }
+    public function del($id){
+        
+        $this->db->where('kode_barang',$id);
+        $this->db->delete('tb_barang');
 
     }
     
