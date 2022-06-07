@@ -4,6 +4,15 @@
     defined('BASEPATH') OR exit('No direct script access allowed');
     
     class Metode extends CI_Controller {
+
+
+        public function __construct() {
+
+            parent::__construct();
+
+            // load model 
+            $this->load->model('Penjualan_model');
+        }
     
         public function index(){
         
@@ -37,6 +46,125 @@
             $hasil = $this->exponential_smoothing( $dataPenjualan, 0.8 );
             $hasil = $this->exponential_smoothing( $dataPenjualan, 0.9 );
             
+        }
+
+
+
+        public function uji() {
+
+            $timeframe = "month"; /** week | 2 week | 1 month */ 
+            
+            $start = "2019-01-01";
+            $end = "2019-03-01";
+
+            /**
+             * Undocumented function
+             *
+             * @param [string] $timeframe = untuk mengidentifikasi timeframe yang digunakan
+             * @param [year-month] $start_month | $end_month = untuk melihat interval waktu yang akan dilakukan peramalan
+             * 
+             * // TODO 
+             * 1. ambil data start date of month pada variabel start month
+             * 2. ambil data end date of month pada variabel end month
+             * 
+             *  1.1 ambil data timeframe
+             *      A. apabila timeframe yang diambil : week 
+             *          
+             *          
+             */
+
+            
+
+            // convert to string
+            $start_string = strtotime( $start );
+            $end_string = strtotime( $end );
+
+
+            $set_timeframe = [];
+        
+
+            while( $start_string <= $end_string ) {
+
+                // get start of week
+                if ( $timeframe == "week" ) {
+
+                    $start_time = strtotime("monday this week", $start_string);
+                    $end_time = strtotime("sunday this week", $start_string);
+                
+                } else if ( $timeframe == "2 week" ) { 
+
+                        $start_time = strtotime("monday this week", $start_string);
+                        $end_week = strtotime("sunday this week", $start_time);
+
+                        $end_time = strtotime( "+7 day", $end_week );
+
+                        $start_string = $end_time;
+                
+                
+                } else if ( $timeframe == "month" ) {
+
+                    $start_day_of_month = date("Y-m-01", $start_string);
+                    $start_time = strtotime( $start_day_of_month );
+
+                    $end_day_of_month = date('Y-m-t', $start_string);
+                    $end_time = strtotime($end_day_of_month);
+                }
+                
+                // echo date('d F Y', $start_time).' - '.date('d F Y', $end_time).'<br>';
+
+
+                $dt_time = array( $start_time, $end_time );
+                // array_push( $set_timeframe, $dt_time );
+                $set_timeframe[$start_time] = $dt_time;
+
+
+                $start_string = strtotime("+1 day", $start_string);
+            }
+
+
+
+            $dataset = [];
+            foreach ( $set_timeframe AS $isi ) {
+
+                $start = date('Y-m-d', $isi[0]);
+                $end = date('Y-m-d', $isi[1]);
+
+                
+                // echo $start.' '.$end;
+                $query = $this->Penjualan_model->timeframe_penjualan( $start, $end );
+
+                if ( $query->num_rows() > 0 ) {
+
+                    foreach ( $query->result_array() AS $kolom ) {
+
+                        array_push( $dataset, array(
+
+                            'bulan' => $kolom['tgl'],
+                            'actual'=> $kolom['penjualan']
+                        ) );
+                    }
+                }
+
+                // print_r( $query->result_array() );
+                // echo '<hr>';
+            }
+
+
+
+            $hitung = $this->exponential_smoothing( $dataset, 0.1 );
+            $hitung = $this->exponential_smoothing( $dataset, 0.2 );
+            $hitung = $this->exponential_smoothing( $dataset, 0.3 );
+            $hitung = $this->exponential_smoothing( $dataset, 0.4 );
+            $hitung = $this->exponential_smoothing( $dataset, 0.5 );
+            $hitung = $this->exponential_smoothing( $dataset, 0.6 );
+            $hitung = $this->exponential_smoothing( $dataset, 0.7 );
+            $hitung = $this->exponential_smoothing( $dataset, 0.8 );
+            $hitung = $this->exponential_smoothing( $dataset, 0.99 );
+
+
+
+            // echo date('Y-m-d', strtotime("monday this week", strtotime("2022-01-10")));
+
         }
 
 
