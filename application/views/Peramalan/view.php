@@ -1,119 +1,51 @@
-<div class="card card-custom">
- <div class="card-header">
-  <h3 class="card-title">
-   Bootstrap Date Picker Examples
-  </h3>
- </div>
- <!--begin::Form-->
- <form class="form">
-  <div class="card-body">
-   <div class="form-group row">
-    <label class="col-form-label text-right col-lg-3 col-sm-12">Minimum Setup</label>
-    <div class="col-lg-4 col-md-9 col-sm-12">
-     <input type="text" class="form-control" readonly placeholder="Select date"/>
-    </div>
-   </div>
-   <div class="form-group row">
-    <label class="col-form-label text-right col-lg-3 col-sm-12">Input Group Setup</label>
-    <div class="col-lg-4 col-md-9 col-sm-12">
-     <div class="input-group date">
-      <input type="text" class="form-control" readonly  placeholder="Select date"/>
-      <div class="input-group-append">
-       <span class="input-group-text">
-        <i class="la la-calendar-check-o"></i>
-       </span>
-      </div>
-     </div>
-    </div>
-   </div>
-   <div class="form-group row">
-    <label class="col-form-label text-right col-lg-3 col-sm-12">Enable Helper Buttons</label>
-    <div class="col-lg-4 col-md-9 col-sm-12">
-     <div class="input-group date" >
-      <input type="text" class="form-control" readonly  value="05/20/2017" id="kt_datepicker_3"/>
-      <div class="input-group-append">
-       <span class="input-group-text">
-        <i class="la la-calendar"></i>
-       </span>
-      </div>
-     </div>
-     <span class="form-text text-muted">Enable clear and today helper buttons</span>
-    </div>
-   </div>
-   <div class="form-group row">
-    <label class="col-form-label text-right col-lg-3 col-sm-12">Orientation</label>
-    <div class="col-lg-4 col-md-9 col-sm-12">
-     <div class="input-group date mb-2" >
-      <input type="text" class="form-control" placeholder="Top left" id="kt_datepicker_4_1"/>
-      <div class="input-group-append">
-      <span class="input-group-text">
-       <i class="la la-bullhorn"></i>
-       </span>
-      </div>
-     </div>
+<!--begin::Entry-->
+<div class="d-flex flex-column-fluid">
+							<!--begin::Container-->
+							<div class="container">
+							    <div class="card card-custom">
+                                        
+                                        <!--begin::Form-->
 
-     <div class="input-group date mb-2">
-      <input type="text" class="form-control" placeholder="Top right" id="kt_datepicker_4_2"/>
-      <div class="input-group-append">
-       <span class="input-group-text">
-       <i class="la la-clock-o"></i>
-       </span>
-      </div>
-     </div>
+                                         <?php //echo validation_errors(); ?>
+                                        <?php echo validation_errors()?>
+                                        <form action="" method="post">
+                                        
 
-     <div class="input-group date mb-2">
-      <input type="text" class="form-control" placeholder="Bottom left"  id="kt_datepicker_4_3"/>
-      <div class="input-group-append">
-       <span class="input-group-text">
-       <i class="la la-check"></i>
-       </span>
-      </div>
-     </div>
+                                            <div class="card-body col-lg-6 ">
+                                            <label>Pilih Barang <span class="text-danger">*</span> </label>
+                                                <select name="barang" class="form-control ">
+                                                    <option value="beras">...............</option>
+                                                </select>
+                                                </div>
 
-     <div class="input-group date">
-      <input type="text" class="form-control" placeholder="Bottom right" id="kt_datepicker_4_4"/>
-      <div class="input-group-append">
-       <span class="input-group-text">
-       <i class="la la-check-circle-o"></i>
-       </span>
-      </div>
-     </div>
-    </div>
-   </div>
-   <div class="form-group row">
-    <label class="col-form-label text-right col-lg-3 col-sm-12">Range Picker</label>
-    <div class="col-lg-4 col-md-9 col-sm-12">
-     <div class="input-daterange input-group" id="kt_datepicker_5">
-      <input type="text" class="form-control" name="start"/>
-      <div class="input-group-append">
-       <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
-      </div>
-      <input type="text" class="form-control" name="end"/>
-     </div>
-     <span class="form-text text-muted">Linked pickers for date range selection</span>
-    </div>
-   </div>
-   <div class="form-group row">
-    <label class="col-form-label text-right col-lg-3 col-sm-12">Inline Mode</label>
-    <div class="col-lg-4 col-md-9 col-sm-12">
-     <div class id="kt_datepicker_6"></div>
-    </div>
-   </div>
-   <div class="form-group row">
-    <label class="col-form-label text-right col-lg-3 col-sm-12">Modal Demos</label>
-    <div class="col-lg-4 col-md-9 col-sm-12">
-     <a href="#" class="btn font-weight-bold btn-light-primary" data-toggle="modal" data-target="#kt_datepicker_modal">Launch modal datepickers</a>
-    </div>
-   </div>
-  </div>
-  <div class="card-footer">
-   <div class="form-group row">
-    <div class="col-lg-9 ml-lg-auto">
-     <button type="reset" class="btn btn-primary mr-2">Submit</button>
-     <button type="reset" class="btn btn-secondary">Cancel</button>
-    </div>
-   </div>
-  </div>
- </form>
- <!--end::Form-->
-</div>
+                                                <div class=" card-body col-lg-6">
+                                                <label>Waktu Peramalan<span class="text-danger">*</span> </label>
+                                                <select name="peramalan" class="form-control ">
+                                                    <option value="">pilih</option>
+                                                    <option value="week">Mingguan</option>
+                                                    <option value="2 week">2 minggu</option>
+                                                    <option value="month">1 Bulan</option>
+                                                </select>
+                                                </div>
+
+                                                
+                                            
+                                        </div>
+                                        <div class="card-footer">
+                                                    <button type="submit" class="btn btn-success mr-2" ><i class="fa fa-paper-plane"></i>Hitung/Peramalan</button>
+                                                    
+                                                </div>
+                                        </form>
+                                    <!--end::Form-->
+                                </div>
+										
+								</div>
+								</div>
+								<!--end::Card-->
+								<!--begin::Card-->
+								
+								<!--end::Card-->
+							</div>
+							<!--end::Container-->
+						</div>
+						<!--end::Entry-->

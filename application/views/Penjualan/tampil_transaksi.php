@@ -59,17 +59,27 @@
                                                 <th>Harga</th>
                                                 <th>Jumlah</th>
                                                 <th>Sub Total</th>
-												
 												</tr>
+                                                
 											</thead>
 											<tbody>
-                                            <tr>                                                                                       
-                                            <td>1</td>
-                                            </tr>
-												
-												
-											
-												
+                                            <?php $no =1 ; 
+                                                foreach($row_barang->result() as $key => $data){?>
+												<tr>
+													<td><?=$no++?></td>
+													<td><?=$data->nama_barang?></td>
+													<td><?=$data->nama_satuan?></td>
+													<td><?=$data->harga_jual?></td>
+                                                    <td><?=$row->permintaan?></td>
+                                                    
+
+												</td>
+													
+                                                   
+                                                    
+													
+												</tr>
+												<?php }?>
 											</tbody>
 										</table>
 										<!--end: Datatable-->

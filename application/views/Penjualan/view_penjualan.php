@@ -7,15 +7,15 @@
 									<div class="alert-icon align-self-start mt-1">
 										<i class="fas fa-address-book text-primary"></i>
 									</div>
-									<div class="alert-text">Data Barang Toko Agung</div>
+									<div class="alert-text">Data Penjualan Toko Agung</div>
 								</div>
 								<!--end::Notice-->
 								<!--begin::Card-->
 								<div class="card card-custom gutter-b">
 									<div class="card-header flex-wrap border-0 pt-6 pb-0">
 										<div class="card-title">
-											<h3 class="card-label">Data Barang
-											<span class="d-block text-muted pt-2 font-size-sm">Data barang pada toko agung </span></h3>
+											<h3 class="card-label">Data Penjualan 
+											<span class="d-block text-muted pt-2 font-size-sm">Data penjualan pada toko agung </span></h3>
 										</div>
 										<div class="card-toolbar">
 											<!--begin::Dropdown-->
@@ -120,16 +120,16 @@
                                                 foreach($row->result() as $key => $data){?>
 												<tr>
 													<td><?=$no++?></td>
-													<td><?=$data->kode_barang?></td>
-													<td><?=$data->nama_barang?></td>
-													<td><?=$data->nama_barang?></td>
+													<td><?=$data->kd_order?></td>
+													<td><?=$data->tanggal?></td>
+													<td><?=$data->permintaan?></td>
 												</td>
 													
                                                    
                                                     
 													<td class=" text-center" width="160px">
-                                                    <a href="<?=site_url('penjualan/tampil')?>" class= "btn btn-primary btn-xs">
-                                                            <i class="fa fa-pencil-alt"> </i> view
+                                                    <a href="<?=site_url('penjualan/tampil/'. $data->kd_order)?>" class= "btn btn-primary btn-xs">
+                                                            <i class="fa fa-pencil-alt"> </i> view	
                                                           </a>
 
                                                     <form action="<?=site_url('')?>" method="post">
