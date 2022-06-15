@@ -126,6 +126,32 @@
 		<!--begin::Page Scripts(used by this page)-->
 		<script src="<?php echo base_url() ?>assets/js/pages/widgets.js"></script>
 		<!--end::Page Scripts-->
+
+
+		<script>
+			$(function () {
+
+				var arrows;
+				if (KTUtil.isRTL()) {
+					arrows = {
+						leftArrow: '<i class="la la-angle-right"></i>',
+						rightArrow: '<i class="la la-angle-left"></i>'
+					}
+				} else {
+					arrows = {
+						leftArrow: '<i class="la la-angle-left"></i>',
+						rightArrow: '<i class="la la-angle-right"></i>'
+					}
+				}
+
+				// range picker
+				$('#kt_datepicker_5').datepicker({
+					rtl: KTUtil.isRTL(),
+					todayHighlight: true,
+					templates: arrows
+				});
+			});
+		</script>
 	</body>
 	<!--end::Body-->
 </html>

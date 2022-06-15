@@ -1,51 +1,88 @@
 <!--begin::Entry-->
 <div class="d-flex flex-column-fluid">
-							<!--begin::Container-->
-							<div class="container">
-							    <div class="card card-custom">
-                                        
-                                        <!--begin::Form-->
+	<!--begin::Container-->
+	<div class="container">
+    
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <div class="card card-body">
+                    <h4>Form Atribut Peramalan</h4>
+                    <small>Isi form atribut peramalan dibawah ini</small>
 
-                                         <?php //echo validation_errors(); ?>
-                                        <?php echo validation_errors()?>
-                                        <form action="" method="post">
-                                        
+                    <hr>
 
-                                            <div class="card-body col-lg-6 ">
-                                            <label>Pilih Barang <span class="text-danger">*</span> </label>
-                                                <select name="barang" class="form-control ">
-                                                    <option value="beras">...............</option>
-                                                </select>
-                                                </div>
+                    <form action="<?php echo base_url('peramalan/proses') ?>" method="POST">
 
-                                                <div class=" card-body col-lg-6">
-                                                <label>Waktu Peramalan<span class="text-danger">*</span> </label>
-                                                <select name="peramalan" class="form-control ">
-                                                    <option value="">pilih</option>
-                                                    <option value="week">Mingguan</option>
-                                                    <option value="2 week">2 minggu</option>
-                                                    <option value="month">1 Bulan</option>
-                                                </select>
-                                                </div>
-
-                                                
-                                            
-                                        </div>
-                                        <div class="card-footer">
-                                                    <button type="submit" class="btn btn-success mr-2" ><i class="fa fa-paper-plane"></i>Hitung/Peramalan</button>
-                                                    
-                                                </div>
-                                        </form>
-                                    <!--end::Form-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                	<label for="">Interval Waktu Peramalan</label>
+                                	<div class="input-daterange input-group" id="kt_datepicker_5">
+                                		<input type="text" class="form-control" name="start" />
+                                		<div class="input-group-append">
+                                			<span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                                		</div>
+                                		<input type="text" class="form-control" name="end" />
+                                	</div>
                                 </div>
-										
-								</div>
-								</div>
-								<!--end::Card-->
-								<!--begin::Card-->
-								
-								<!--end::Card-->
-							</div>
-							<!--end::Container-->
-						</div>
-						<!--end::Entry-->
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Timeframe</label>
+                                    <select name="timeframe" class="form-control" id="">
+                                        <option value="week">Mingguan</option>
+                                        <option value="2 week">2 Minggu</option>
+                                        <option value="month">1 Bulan</option>
+                                    </select>
+                                    <small>Timeframe waktu peramalan</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Barang</label>
+                                    <select name="kode_barang" class="form-control" id="">
+                                        <?php foreach ( $barang AS $brg ) : ?>
+                                        <option value="<?php echo $brg['kode_barang'] ?>"><?php echo $brg['kode_barang'].' '.$brg['nama_barang'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <small>Pilih barang</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Alpha</label>
+                                    <input type="text" name="alpha" class="form-control">
+                                    <small>Pilih barang</small>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <a href="<?php echo base_url() ?>" class="btn btn-default btn-sm">Batal</a>
+                                    <button class="btn btn-primary btn-sm">Proses perhitungan</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+	</div>
+
+</div>
+</div>
+<!--begin::Card-->
+
+<!--end::Card-->
+</div>
+<!--end::Container-->
+</div>
+<!--end::Entry-->
