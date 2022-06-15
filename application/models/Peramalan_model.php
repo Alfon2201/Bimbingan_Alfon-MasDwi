@@ -21,6 +21,8 @@
         public function insert( $data ) {
 
             $this->db->insert('tb_peramalan', $data);
+
+            return $this->db->insert_id();
         }
     }
     

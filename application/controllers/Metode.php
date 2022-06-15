@@ -52,9 +52,9 @@
 
         public function uji() {
 
-            $timeframe = "month"; /** week | 2 week | 1 month */ 
+            $timeframe = "week"; /** week | 2 week | 1 month */ 
             
-            $start = "2019-01-01";
+            $start = "2019-02-01";
             $end = "2019-03-01";
 
             /**

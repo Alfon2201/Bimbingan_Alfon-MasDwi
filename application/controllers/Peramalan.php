@@ -83,8 +83,6 @@
 
                     $end_day_of_month = date('Y-m-t', $start_string);
                     $end_time = strtotime($end_day_of_month);
-
-                    echo $start_time;
                 }
                 
                 // echo date('d F Y', $start_time).' - '.date('d F Y', $end_time).'<br>';
@@ -92,12 +90,12 @@
 
                 
 
-                // $dt_time = array( $start_time, $end_time );
-                // // array_push( $set_timeframe, $dt_time );
-                // $set_timeframe[$start_time] = $dt_time;
+                $dt_time = array( $start_time, $end_time );
+                // array_push( $set_timeframe, $dt_time );
+                $set_timeframe[$start_time] = $dt_time;
 
 
-                // $start_string = strtotime("+1 day", $start_string);
+                $start_string = strtotime("+1 day", $start_string);
             }
 
 
@@ -107,35 +105,68 @@
 
 
 
-            // $dataset = [];
-            // foreach ( $set_timeframe AS $isi ) {
+            $dataset = [];
+            foreach ( $set_timeframe AS $isi ) {
 
-            //     $start = date('Y-m-d', $isi[0]);
-            //     $end = date('Y-m-d', $isi[1]);
+                $start = date('Y-m-d', $isi[0]);
+                $end = date('Y-m-d', $isi[1]);
 
                 
-            //     // echo $start.' '.$end;
-            //     $query = $this->Penjualan_model->timeframe_penjualan( $start, $end, $kode_barang );
+                // echo $start.' '.$end;
+                $query = $this->Penjualan_model->timeframe_penjualan( $start, $end, $kode_barang );
 
-            //     if ( $query->num_rows() > 0 ) {
+                if ( $query->num_rows() > 0 ) {
 
-            //         foreach ( $query->result_array() AS $kolom ) {
+                    foreach ( $query->result_array() AS $kolom ) {
 
-            //             array_push( $dataset, array(
+                        array_push( $dataset, array(
 
-            //                 'bulan' => $kolom['tgl'],
-            //                 'actual'=> $kolom['penjualan']
-            //             ) );
-            //         }
-            //     }
+                            'bulan' => $kolom['tgl'],
+                            'actual'=> $kolom['penjualan']
+                        ) );
 
-            //     // print_r( $query->result_array() );
-            //     // echo '<hr>';
-            // }
+                        // echo $kolom['tgl'].'<br>';
+                    }
+                }
+            }
 
+
+            // urutkan tanggal  
+            usort($dataset, array($this, 'date_compare'));
 
 
             $peramalan = $this->exponential_smoothing( $dataset, $alpha );
+
+
+            // header('Content-Type: json');
+            $JSON_ENCODE = json_encode( $peramalan, JSON_PRETTY_PRINT );
+
+            $data = array(
+
+                'kode_barang'   => $kode_barang,
+                'timeframe'     => $timeframe,
+                'tanggalawal'   => $start_string,
+                'tanggalakhir'  => $end_string,
+                'perhitungan'   => $JSON_ENCODE
+            );
+
+            $id_peramalan = $this->Peramalan_model->insert( $data );
+
+            redirect( 'peramalan/hasil/'. $id_peramalan );
+            
+
+        }
+
+
+
+
+        public function hasil( $id_peramalan ) {
+
+            $data['peramalan'] = $this->Peramalan_model->ambil_data_berdasarkan_id( $id_peramalan )->row_array();
+
+            $this->load->view('template/template_header');  
+            $this->load->view('peramalan/hasil', $data);
+            $this->load->view('template/template_footer');
         }
 
 
@@ -182,11 +213,6 @@
                 );
     
                 array_push( $hasilPerhitungan, $hasilPeramalan );
-                
-
-
-                echo 'bulan ' . $isi['bulan'].' = '. $isi['actual'].' | Ft = '. $Ft;
-                echo '<br>';
             }
 
 
@@ -204,9 +230,6 @@
             );
 
             array_push( $hasilPerhitungan, $hasilPeramalan );
-            echo "Hasil Peramalan FT : ". $Ft;
-
-            echo '<hr>';
 
 
 
@@ -227,12 +250,8 @@
                     $total_mse = $total_mse + $MSE;
                     $total_mape = $total_mape + $MAPE;
 
-                    echo 'Bulan '. $index.' mad : '. $MAD.' mse : '. $MSE.' mape : '. $MAPE;
-                    echo '<br>';
                 }
             }
-
-            echo '<hr>';
 
             $total = count($dataset);
             $avg_mad = $total_mad / $total;
@@ -240,16 +259,26 @@
             $avg_mape = $total_mape / $total;
 
 
-            echo '<h2>Sehingga Nilai Alpha '.$alpha.' memiliki hasil berikut</h2>';
-            echo '<h4>MAD : '.$avg_mad.'</h4>';
-            echo '<h4>MSE : '.$avg_mse.'</h4>';
-            echo '<h4>MAPE : '.$avg_mape.'</h4>';
+            $data = array(
 
+                'hasil_perhitungan' => $hasilPerhitungan,
+                'avg_mad'   => $avg_mad,
+                'avg_mse'   => $avg_mse,
+                'avg_mape'   => $avg_mape,
+            );
 
-
-            echo '<hr>';
-
+            return $data;
         }
+
+
+
+
+        // sorting date
+        function date_compare($element1, $element2) {
+            $datetime1 = strtotime($element1['bulan']);
+            $datetime2 = strtotime($element2['bulan']);
+            return $datetime1 - $datetime2;
+        } 
 
         
     }
