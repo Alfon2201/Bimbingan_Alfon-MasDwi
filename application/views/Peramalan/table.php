@@ -32,6 +32,20 @@
                         </thead>
                         <tbody>
 
+                        <?php foreach ( $peramalan->result_array() AS $urutan => $isi ) : ?>
+                            <tr>
+                                <td><?php echo $urutan + 1 ?></td>
+                                <td><?php echo $isi['kode_barang'] ?></td>
+                                <td><?php echo $isi['timeframe'] ?></td>
+                                <td><?php echo $isi['alpha'] ?></td>
+                                <td><?php echo $isi['created_at'] ?></td>
+                                <td>
+                                    <a href="<?php echo base_url('peramalan/hapus/'. $isi['id_peramalan']) ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" class="btn btn-sm btn-light-danger">Hapus</a>
+                                    <a href="<?php echo base_url('peramalan/hasil/'. $isi['id_peramalan']) ?>" class="btn btn-sm btn-warning">Lihat lebih lanjut</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+
                         </tbody>
                     </table>
                 </div>

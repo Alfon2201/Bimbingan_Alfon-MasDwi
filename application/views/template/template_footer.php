@@ -125,6 +125,7 @@
 		<!--end::Page Vendors-->
 		<!--begin::Page Scripts(used by this page)-->
 		<script src="<?php echo base_url() ?>assets/js/pages/widgets.js"></script>
+		<script src="<?php echo base_url() ?>assets/js/pages/crud/ktdatatable/base/html-table.js?v=7.2.9"></script>
 		<!--end::Page Scripts-->
 
 
@@ -150,6 +151,13 @@
 					todayHighlight: true,
 					templates: arrows
 				});
+
+
+				$('#kt_select2_1').select2({
+					placeholder: "Pilih item . . ."
+				});
+
+			
 			});
 		</script>
 	</body>

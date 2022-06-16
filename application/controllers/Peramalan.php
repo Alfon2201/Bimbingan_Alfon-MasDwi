@@ -18,8 +18,11 @@
 
         public function index(){
             
+
+            $data['peramalan'] = $this->Peramalan_model->ambil_data();
+
             $this->load->view('template/template_header');  
-            $this->load->view('peramalan/table');
+            $this->load->view('peramalan/table', $data);
             $this->load->view('template/template_footer');
         }
 
@@ -42,8 +45,8 @@
 
             $interval = $this->input->post('interval');
             $timeframe = $this->input->post('timeframe');
-            // $kode_barang = $this->input->post('kode_barang');
-            $kode_barang = "BR001";
+            $kode_barang = $this->input->post('kode_barang');
+            // $kode_barang = "BR001";
             $alpha = $this->input->post('alpha');
 
 
@@ -134,25 +137,32 @@
             // urutkan tanggal  
             usort($dataset, array($this, 'date_compare'));
 
+            
+            if ( count($dataset) > 0 ) {
 
-            $peramalan = $this->exponential_smoothing( $dataset, $alpha );
+                $peramalan = $this->exponential_smoothing( $dataset, $alpha );
 
+                 // header('Content-Type: json');
+                $JSON_ENCODE = json_encode( $peramalan, JSON_PRETTY_PRINT );
 
-            // header('Content-Type: json');
-            $JSON_ENCODE = json_encode( $peramalan, JSON_PRETTY_PRINT );
+                $data = array(
 
-            $data = array(
+                    'kode_barang'   => $kode_barang,
+                    'timeframe'     => $timeframe,
+                    'alpha'         => $alpha,
+                    'tanggalawal'   => $start_string,
+                    'tanggalakhir'  => $end_string,
+                    'perhitungan'   => $JSON_ENCODE
+                );
 
-                'kode_barang'   => $kode_barang,
-                'timeframe'     => $timeframe,
-                'tanggalawal'   => $start_string,
-                'tanggalakhir'  => $end_string,
-                'perhitungan'   => $JSON_ENCODE
-            );
+                $id_peramalan = $this->Peramalan_model->insert( $data );
 
-            $id_peramalan = $this->Peramalan_model->insert( $data );
+                redirect( 'peramalan/hasil/'. $id_peramalan );
+            } else {
 
-            redirect( 'peramalan/hasil/'. $id_peramalan );
+                echo "Tidak dapat mengeksekusi peramalan, Data penjualan berdasarkan tanggal yang ditentukan, kosong";
+            }
+
             
 
         }
@@ -162,7 +172,23 @@
 
         public function hasil( $id_peramalan ) {
 
-            $data['peramalan'] = $this->Peramalan_model->ambil_data_berdasarkan_id( $id_peramalan )->row_array();
+            $peramalan = $this->Peramalan_model->ambil_data_berdasarkan_id( $id_peramalan )->row_array();
+
+
+            // ambil informasi kode barang berdasarkan "kode"
+            $kode_barang = $peramalan['kode_barang'];
+            $barang_detail = $this->Barang_m->get( $kode_barang )->row_array();
+
+            // bedah data json
+            $perhitungan = json_decode( $peramalan['perhitungan'] );
+
+
+            $data = array(
+
+                'peramalan'    => $peramalan,
+                'barang'       => $barang_detail,
+                'perhitungan'  => $perhitungan,
+            );
 
             $this->load->view('template/template_header');  
             $this->load->view('peramalan/hasil', $data);
@@ -224,7 +250,7 @@
 
             $hasilPeramalan = array(
 
-                'bulan'     => "Desember",
+                'bulan'     => "Hasil",
                 'actual'    => 0,
                 'forecast'  => $Ft
             );
@@ -270,6 +296,14 @@
             return $data;
         }
 
+
+
+
+        public function hapus( $id_peramalan ) {
+
+            $this->Peramalan_model->hapus( $id_peramalan );
+            redirect('peramalan/index');
+        }
 
 
 

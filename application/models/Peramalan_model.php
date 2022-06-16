@@ -24,6 +24,11 @@
 
             return $this->db->insert_id();
         }
+
+        public function hapus( $id_peramalan ) {
+
+            $this->db->where('id_peramalan', $id_peramalan)->delete('tb_peramalan');
+        }
     }
     
     /* End of file Peramalan_model.php */

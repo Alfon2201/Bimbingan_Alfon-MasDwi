@@ -136,7 +136,7 @@
 
 
 
-    public function testing_cetak(){
+    public function laporan_barang(){
 
         // create new PDF document
         $pdf = new Pdf_tcpdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -144,25 +144,19 @@
         // set document information
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetAuthor('Nicola Asuni');
-        $pdf->SetTitle('TCPDF Example 001');
+        $pdf->SetTitle('LAPORAN DATA BARANG-'. date('Ymd'));
         $pdf->SetSubject('TCPDF Tutorial');
         $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
-        // set default header data
-        $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 001', PDF_HEADER_STRING, array(0,64,255), array(0,64,128));
-        $pdf->setFooterData(array(0,64,0), array(0,64,128));
-
-        // set header and footer fonts
-        $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-        $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+        // remove default header/footer
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
 
         // set default monospaced font
         $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
         // set margins
         $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
         // set auto page breaks
         $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
@@ -178,18 +172,9 @@
 
         // ---------------------------------------------------------
 
-        // set default font subsetting mode
-        $pdf->setFontSubsetting(true);
-
-        // Set font
-        // dejavusans is a UTF-8 Unicode font, if you only need to
-        // print standard ASCII chars, you can use core fonts like
-        // helvetica or times to reduce file size.
-        $pdf->SetFont('dejavusans', '', 14, '', true);
-
-        // Add a page
-        // This method has several options, check the source code documentation for more information.
+        // add a page
         $pdf->AddPage();
+
 
         // set text shadow effect
         $pdf->setTextShadow(array('enabled'=>true, 'depth_w'=>0.2, 'depth_h'=>0.2, 'color'=>array(196,196,196), 'opacity'=>1, 'blend_mode'=>'Normal'));
@@ -204,7 +189,13 @@
 
 
         /** Header */
-        $header = '<h1 style="text-align: center">LAPORAN DATA BARANG</h1>';
+        // set font
+        $pdf->SetFont('times', '', 14);
+        $header = '
+            <div style="text-align: center">
+                <h4 style="margin: 0px">LAPORAN DATA BARANG</h4>
+                <label>Berikut adalah data barang yang sudah tersimpan</label>
+            </div><br><br>';
         $pdf->writeHTMLCell(0, 0, '', '', $header, 0, 1, 0, true, '', true);
 
 
@@ -224,21 +215,26 @@
 
             $table_body .= '<tr>
                 <td>'.$nomor.'</td>
+                <td>'.$row->kode_barang.'</td>
                 <td>'.$row->nama_barang.'</td>
                 <td>'.$row->stok.'</td>
-                <td>'.$row->harga_beli.'</td>
+                <td>'.number_format($row->harga_beli, 2).'</td>
+                <td>'.number_format($row->harga_jual, 2).'</td>
             </tr>';
 
 
             $nomor++;
         }
 
+        $pdf->SetFont('times', '', 11);
         $html = '<table border="1" width="100%" cellpadding="6">
             <tr>
-                <td width="10%">No</td>
-                <td width="20%">Nama</td>
-                <td>Stok</td>
-                <td>Harga Beli</td>
+                <td width="5%"><b>No</b></td>
+                <td width="15%"><b>Kode Barang</b></td>
+                <td width="32%"><b>Nama</b></td>
+                <td width="10%"><b>Stok</b></td>
+                <td width="18%"><b>Harga Beli</b></td>
+                <td width="18%"><b>Harga Jual</b></td>
             </tr>
 
 
