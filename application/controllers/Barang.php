@@ -11,7 +11,7 @@
             
             $this->load->view('template/template_header');
             
-            $this->load->view('barang/view_barang',$data);
+           // $this->load->view('barang/view_barang',$data);
             $this->load->view('template/template_footer');
         }
         

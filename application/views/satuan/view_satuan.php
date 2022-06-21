@@ -51,10 +51,11 @@
 													<td><?=$no++?></td>
 													<td><?=$data->nama_satuan?></td>
 													<td><?=$data->tanggal_pembuatan?></td>
-													<td class=" text-center" width="160px">
+													<td class=" text-center" width="240px">
                                                         <a href="<?=site_url('satuan/edit/'.$data->id_satuan)?>" class= "btn btn-primary btn-xs">
                                                             <i class="fa fa-pencil-alt"> </i> Update
                                                           </a>
+														  
                                                     </td>
                                                     <td class=" text-center" width="160px">
                                                     <form action="<?=site_url('satuan/del')?>" method="post">
@@ -62,11 +63,11 @@
                                                          <button onclick="return confirm('apakah ada akan menghapus data?')" class= "btn btn-danger btn-xs">
                                                             <i class="fa fa-trash"> </i> Delete
                                                             </button>
+													</td>
+                                                    
                                                
                                                     
                                                     </form>
-													</td>
-                                                    
 												</tr>
 												
 												<?php } ?>
