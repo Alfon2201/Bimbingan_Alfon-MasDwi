@@ -49,7 +49,6 @@
             // $kode_barang = "BR001";
             $alpha = $this->input->post('alpha');
 
-
             // split interval waktu
             $date_start = $this->input->post('start');
             $date_end = $this->input->post('end');
@@ -58,86 +57,101 @@
             $start_string = strtotime( $date_start );
             $end_string = strtotime( $date_end );
 
-            $set_timeframe = [];
-        
+            
 
+            $set_timeframe = [];
+            $temporary = "";
+            $urutan = 0;
+        
+            $dataset = [];
             while( $start_string <= $end_string ) {
 
-                // get start of week
-                if ( $timeframe == "week" ) {
 
-                    $start_time = strtotime("monday this week", $start_string);
-                    $end_time = strtotime("sunday this week", $start_string);
-                
-                } else if ( $timeframe == "2 week" ) { 
+                // filter berlaku untuk 7 hari dan 14 hari 
+                if ( $timeframe == "week" || $timeframe == "2 week"  ) {
 
-                        $start_time = strtotime("monday this week", $start_string);
-                        $end_week = strtotime("sunday this week", $start_time);
 
-                        $end_time = strtotime( "+7 day", $end_week );
+                    // get start of week
+                    if ( $timeframe == "week" ) {
 
-                        $start_string = $end_time;
-                
-                
+                        $polaHari = "+6 day";
+                    // filter 2 mingguan
+                    } else if ( $timeframe == "2 week" ) { 
+
+                        $polaHari = "+13 day";
+                    // filter bulanan
+                    }
+
+                    if ( $urutan == 0 ) {
+    
+                        $start_time = $start_string;
+                        $end_time = strtotime($polaHari, $start_string);
+    
+                        // add tomporary 
+                        $temporary = strtotime("+1 day", $end_time);
+                        
+                    } else {
+    
+                        $start_time = $temporary;
+                        $end_time = strtotime($polaHari, $start_time);
+    
+                        // add tomporary 
+                        $temporary =  strtotime("+1 day", $end_time);
+                    }
+
+                    $start_string = $temporary;
+
                 } else if ( $timeframe == "month" ) {
 
-                    $start_day_of_month = date("Y-m-01", $start_string);
-                    $start_time = strtotime( $start_day_of_month );
+                    $start_time = $start_string;
+                    $end_time = strtotime("next_month", $start_string);
 
-                    $end_day_of_month = date('Y-m-t', $start_string);
-                    $end_time = strtotime($end_day_of_month);
+                    $start_string = $end_time;
                 }
-                
-                // echo date('d F Y', $start_time).' - '.date('d F Y', $end_time).'<br>';
+                echo date('Y-m-d', $start_time).' - '.date('d F Y', $end_time).'<br>';
 
-
-                
-
-                $dt_time = array( $start_time, $end_time );
-                // array_push( $set_timeframe, $dt_time );
-                $set_timeframe[$start_time] = $dt_time;
-
-
-                $start_string = strtotime("+1 day", $start_string);
-            }
-
-
-
-
-
-
-
-
-            $dataset = [];
-            foreach ( $set_timeframe AS $isi ) {
-
-                $start = date('Y-m-d', $isi[0]);
-                $end = date('Y-m-d', $isi[1]);
-
-                
-                // echo $start.' '.$end;
+                // query penjualan
+                $start = date('Y-m-d', $start_time);
+                $end = date('Y-m-d', $end_time);
                 $query = $this->Penjualan_model->timeframe_penjualan( $start, $end, $kode_barang );
+                
+                echo $query->num_rows().'<br>';
 
-                if ( $query->num_rows() > 0 ) {
+                if ( $query->num_rows() > 1 ) {
+
+                    $total_penjualan = 0;
 
                     foreach ( $query->result_array() AS $kolom ) {
 
-                        array_push( $dataset, array(
-
-                            'bulan' => $kolom['tgl'],
-                            'actual'=> $kolom['penjualan']
-                        ) );
-
-                        // echo $kolom['tgl'].'<br>';
+                        $total_penjualan += $kolom['penjualan'];
                     }
+
+                    array_push( $dataset, array(
+
+                        'bulan' => $kolom['tgl'],
+                        'actual'=> $total_penjualan
+                    ) );
+
+                } else if ( $query->num_rows() == 1 ) {
+
+                    $data = $query->row_array();
+
+                    array_push( $dataset, array(
+
+                        'bulan' => $data['tgl'],
+                        'actual'=> $data['penjualan']
+                    ) );
                 }
+
+                $urutan++;
             }
+
 
 
             // urutkan tanggal  
             usort($dataset, array($this, 'date_compare'));
 
-            
+
             if ( count($dataset) > 0 ) {
 
                 $peramalan = $this->exponential_smoothing( $dataset, $alpha );
@@ -150,8 +164,8 @@
                     'kode_barang'   => $kode_barang,
                     'timeframe'     => $timeframe,
                     'alpha'         => $alpha,
-                    'tanggalawal'   => $start_string,
-                    'tanggalakhir'  => $end_string,
+                    'tanggalawal'   => strtotime($date_start),
+                    'tanggalakhir'  => strtotime($date_end),
                     'perhitungan'   => $JSON_ENCODE
                 );
 
@@ -162,6 +176,69 @@
 
                 echo "Tidak dapat mengeksekusi peramalan, Data penjualan berdasarkan tanggal yang ditentukan, kosong";
             }
+            
+
+
+
+
+
+
+
+
+            // $dataset = [];
+            // foreach ( $set_timeframe AS $isi ) {
+
+            //     $start = date('Y-m-d', $isi[0]);
+            //     $end = date('Y-m-d', $isi[1]);
+
+                
+            //     // echo $start.' '.$end;
+            //     $query = $this->Penjualan_model->timeframe_penjualan( $start, $end, $kode_barang );
+
+            //     if ( $query->num_rows() > 0 ) {
+
+            //         foreach ( $query->result_array() AS $kolom ) {
+
+            //             array_push( $dataset, array(
+
+            //                 'bulan' => $kolom['tgl'],
+            //                 'actual'=> $kolom['penjualan']
+            //             ) );
+
+            //             // echo $kolom['tgl'].'<br>';
+            //         }
+            //     }
+            // }
+
+
+            // // urutkan tanggal  
+            // usort($dataset, array($this, 'date_compare'));
+
+            
+            // if ( count($dataset) > 0 ) {
+
+            //     $peramalan = $this->exponential_smoothing( $dataset, $alpha );
+
+            //      // header('Content-Type: json');
+            //     $JSON_ENCODE = json_encode( $peramalan, JSON_PRETTY_PRINT );
+
+            //     $data = array(
+
+            //         'kode_barang'   => $kode_barang,
+            //         'timeframe'     => $timeframe,
+            //         'alpha'         => $alpha,
+            //         'tanggalawal'   => strtotime($date_start),
+            //         'tanggalakhir'  => strtotime($date_end),
+            //         'perhitungan'   => $JSON_ENCODE
+            //     );
+
+            //     $id_peramalan = $this->Peramalan_model->insert( $data );
+
+            //     redirect( 'peramalan/hasil/'. $id_peramalan );
+            // } else {
+
+            //     echo "Tidak dapat mengeksekusi peramalan, Data penjualan berdasarkan tanggal yang ditentukan, kosong";
+            // }
 
             
 

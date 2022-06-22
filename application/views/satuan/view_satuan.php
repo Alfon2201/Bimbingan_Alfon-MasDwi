@@ -35,13 +35,13 @@
 									
 									<div class="card-body">
 										<!--begin: Datatable-->
-										<table class="table table-bordered table-checkable  " id="kt_datatable">
+										<table class="table table-bordered table-checkable  " >
 											<thead>
 												<tr>
 													<th>no</th>
 													<th>Nama Satuan</th>
 													<th>Tanggal Pembuatan</th>
-													<th>Action</th>
+													<th colspan="2">Action</th>
 												</tr>
 											</thead>
 											<tbody>

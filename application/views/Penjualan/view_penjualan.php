@@ -27,8 +27,7 @@
 				<div class="card-toolbar">
 					<!--begin::Dropdown-->
 					<div class="dropdown dropdown-inline mr-2">
-						<button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<a href="<?php echo base_url('penjualan/laporan_penjualan') ?>" class="btn btn-light-primary font-weight-bolder">
 							<span class="svg-icon svg-icon-md">
 								<!--begin::Svg Icon | path:/metronic/theme/html/demo13/dist/assets/media/svg/icons/Design/PenAndRuller.svg-->
 								<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -44,7 +43,7 @@
 									</g>
 								</svg>
 								<!--end::Svg Icon-->
-							</span>Export</button>
+							</span>Export</a>
 					
 					</div>
 					<!--end::Dropdown-->

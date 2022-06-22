@@ -109,6 +109,7 @@
 
 
             $pilih_barang = $this->input->post('kode_barang');
+            $jumlah = $this->input->post('jumlah');
             $explode = explode('-', $pilih_barang);
 
             $kode_barang = $explode[0];
@@ -121,7 +122,7 @@
             
             $data = array(
                 'id'      => $kode_barang,
-                'qty'     => 1,
+                'qty'     => $jumlah,
                 'price'   => intval($harga),
                 'name'    => $this->clean($nama_barang),
                 'coupon' => ""
@@ -200,6 +201,12 @@
 
             // insert batch
             $this->Penjualan_model->insert_data_penjualan_detail( $tb_penjualan_detail );
+
+
+
+            // session cart destroy
+            $this->cart->destroy();
+
             redirect('penjualan/index');
         }
 
@@ -269,7 +276,7 @@
             // ---------------------------------------------------------
     
             // add a page
-            $pdf->AddPage();
+            $pdf->AddPage('L');
     
     
             // set text shadow effect
@@ -307,15 +314,21 @@
     
     
             $nomor = 1;
+            $total = 0;
             foreach ( $dt_penjualan AS $row ) {
-    
+                
+
+                $total += ($row->harga_jual * $row->permintaan);
+
                 $table_body .= '<tr>
                     <td>'.$nomor.'</td>
                     <td>'.$row->kd_order.'</td>
-                    <td>'.$row->kd_barang.'</td>
+                    <td>'.$row->kode_barang.'</td>
                     <td>'.$row->nama_barang.'</td>
                     <td>'.$row->permintaan.'</td>
                     <td>'.number_format($row->harga_jual, 2).'</td>
+                    <td>'.number_format($row->harga_jual * $row->permintaan, 2).'</td>
+                    <td>'.date('d-m-Y H.i A', strtotime($row->tgl_penjualan)).'</td>
                 </tr>';
     
     
@@ -327,14 +340,20 @@
                 <tr>
                     <td width="5%"><b>No</b></td>
                     <td width="15%"><b>Kode Order</b></td>
-                    <td width="15%"><b>Kode Barang</b></td>
-                    <td width="15%"><b>Nama Barang</b></td>
-                    <td width="10%"><b>Jumlah</b></td>
-                    <td width="18%"><b>Harga Jual</b></td>
+                    <td width="10%"><b>Kode Barang</b></td>
+                    <td width="25%"><b>Nama Barang</b></td>
+                    <td width="7%"><b>Jumlah</b></td>
+                    <td width="10%"><b>Harga Jual</b></td>
+                    <td width="10%"><b>Total</b></td>
+                    <td width="15%"><b>Tanggal</b></td>
                 </tr>
     
     
                 '.$table_body.'
+                <tr>
+                    <td colspan="6" align="right"><b>TOTAL</b></td>
+                    <td colspan="2">'.number_format($total).'</td>
+                </tr>
             </table>';
     
     
