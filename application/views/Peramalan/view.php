@@ -40,7 +40,7 @@
                                     <small>Timeframe waktu peramalan</small>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="">Barang</label>
                                     <select name="kode_barang" class="form-control" id="">
@@ -51,11 +51,25 @@
                                     <small>Pilih barang</small>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Tipe</label>
+                                    <select name="tipe" class="form-control" id="">
+                                        <option value="sebagian">Sebagian</option>
+                                        <option value="menyeluruh">Menyeluruh 0 - 1</option>
+                                    </select>
+                                    <small>Pilih sebagian atau menyeluruh</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">Alpha</label>
-                                    <input type="text" name="alpha" class="form-control">
-                                    <small>Pilih barang</small>
+                                    <input type="text" name="alpha" class="form-control" placeholder=". . .">
+                                    <small>Masukkan alpha apabila sebagian</small>
                                 </div>
                             </div>
                         </div>

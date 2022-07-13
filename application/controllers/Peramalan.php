@@ -48,6 +48,7 @@
             $kode_barang = $this->input->post('kode_barang');
             // $kode_barang = "BR001";
             $alpha = $this->input->post('alpha');
+            $tipe = $this->input->post('tipe');
 
             // split interval waktu
             $date_start = $this->input->post('start');
@@ -153,11 +154,27 @@
 
 
             if ( count($dataset) > 0 ) {
+                
+                $hs_peramalan = [];
+                if ( $tipe == "menyeluruh" ) {
 
-                $peramalan = $this->exponential_smoothing( $dataset, $alpha );
+                    for ( $i = 10; $i <= 90; $i += 10 ) {
 
-                 // header('Content-Type: json');
-                $JSON_ENCODE = json_encode( $peramalan, JSON_PRETTY_PRINT );
+                        $alpha = $i / 100;
+                        $peramalan = $this->exponential_smoothing( $dataset, $alpha );
+
+                        array_push( $hs_peramalan, $peramalan );
+                    }
+                } else {
+
+                    $hs_peramalan = $this->exponential_smoothing( $dataset, $alpha );                    
+                }
+                
+                
+
+                
+                
+                $JSON_ENCODE = json_encode( $hs_peramalan, JSON_PRETTY_PRINT );
 
                 $data = array(
 
@@ -166,7 +183,8 @@
                     'alpha'         => $alpha,
                     'tanggalawal'   => strtotime($date_start),
                     'tanggalakhir'  => strtotime($date_end),
-                    'perhitungan'   => $JSON_ENCODE
+                    'perhitungan'   => $JSON_ENCODE,
+                    'tipe_peramalan'=> $tipe
                 );
 
                 $id_peramalan = $this->Peramalan_model->insert( $data );
@@ -368,6 +386,7 @@
                 'avg_mad'   => $avg_mad,
                 'avg_mse'   => $avg_mse,
                 'avg_mape'   => $avg_mape,
+                'alpha'     => $alpha
             );
 
             return $data;

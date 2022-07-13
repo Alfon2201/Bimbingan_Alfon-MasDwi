@@ -37,7 +37,17 @@
                                 <td><?php echo $urutan + 1 ?></td>
                                 <td><?php echo $isi['kode_barang'] ?></td>
                                 <td><?php echo $isi['timeframe'] ?></td>
-                                <td><?php echo $isi['alpha'] ?></td>
+                                <td>
+                                    <?php
+                                        if ( $isi['tipe_peramalan'] == "sebagian" ) {
+
+                                            echo $isi['alpha'];
+                                        } else {
+
+                                            echo 'Menyeluruh 0 - 9';
+                                        }
+                                    ?>
+                                </td>
                                 <td><?php echo $isi['created_at'] ?></td>
                                 <td>
                                     <a href="<?php echo base_url('peramalan/hapus/'. $isi['id_peramalan']) ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" class="btn btn-sm btn-light-danger">Hapus</a>
