@@ -17,12 +17,17 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                 	<label for="">Interval Waktu Peramalan</label>
-                                	<div class="input-daterange input-group" id="kt_datepicker_5">
-                                		<input type="text" class="form-control" name="start" />
+                                    <?php
+                                    
+                                        $start = $this->input->get('start');
+                                        $end = $this->input->get('end');
+                                    ?>
+                                	<div class="input-daterange input-group">
+                                		<input type="text" class="form-control" name="start"  value="<?php echo $start ?>" readonly />
                                 		<div class="input-group-append">
                                 			<span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
                                 		</div>
-                                		<input type="text" class="form-control" name="end" />
+                                		<input type="text" class="form-control" name="end"  value="<?php echo $end ?>" readonly />
                                 	</div>
                                 </div>
                             </div>

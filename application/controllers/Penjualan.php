@@ -197,6 +197,33 @@
                     'kode_barang'   => $ct['id'],
                     'permintaan'    => $ct['qty']
                 ) );
+
+
+
+
+
+
+                /** Pengurangan stok karena terdapat penjualan */
+                $ambilDataBarangGudang = $this->Barang_m->get( $ct['id'] )->row_array();
+                $stokAwal = $ambilDataBarangGudang['stok'];
+
+                $stokPermintaan = $ct['qty'];
+
+                // pengurangan 
+                $stokTerkini = $stokAwal - $stokPermintaan;
+
+                $data = array(
+
+                    'stok'  => $stokTerkini
+                );
+
+                $where = array('kode_barang' => $ct['id']);
+
+                // update stok gudang
+                $this->Barang_m->editStok( $data, $where );
+
+
+                // end pengurangan stok
             }
 
             // insert batch
