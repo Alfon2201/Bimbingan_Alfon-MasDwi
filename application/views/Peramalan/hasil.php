@@ -202,7 +202,17 @@
 
                         <?php
                             
+                            $min = min(array_column($perhitungan, 'avg_mape'));
+                            $hasil_min = [];
+
                             foreach ( $perhitungan AS $index => $hs_peramalan ) :    
+
+
+                                if ( $min == $hs_peramalan->avg_mape ) {
+
+                                    $hasil_min = $hs_peramalan;
+                                }
+
                         ?>
                     <div class="row">
                         <div class="col-md-4">
@@ -364,6 +374,10 @@
 
 
                         <?php endforeach; ?>
+                            
+                        <h4>Kesimpulan</h4>
+                        Sehingga sejumlah peramalan diatas antara 0 - 1 nilai MAPE terendah yaitu <?php echo number_format($min, 2) ?>% dengan nilai
+                        Alpha <?php echo $hasil_min->alpha ?>
 
                     <?php } ?>
 

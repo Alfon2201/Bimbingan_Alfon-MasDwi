@@ -44,6 +44,14 @@ class Barang_m extends CI_Model{
         $this->db->delete('tb_barang');
 
     }
+
+
+
+    // edit barang
+    public function editStok( $data, $where ) {
+
+        $this->db->where( $where )->update('tb_barang', $data);
+    }
     
     
 }

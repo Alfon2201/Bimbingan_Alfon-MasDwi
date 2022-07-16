@@ -31,7 +31,9 @@
         public function tambah() {
 
             $data['peramalan'] = $this->Peramalan_model->ambil_data();
-            $data['barang'] = $this->Barang_m->get()->result_array();
+            // $data['barang'] = $this->Barang_m->get()->result_array();
+            $data['barang'] = $this->Peramalan_model->pencarianBarang();
+            // print_r( $data['barang'] );
 
             $this->load->view('template/template_header');            
             $this->load->view('peramalan/View', $data);
@@ -105,10 +107,11 @@
                 } else if ( $timeframe == "month" ) {
 
                     $start_time = $start_string;
-                    $end_time = strtotime("next_month", $start_string);
+                    $end_time = strtotime("next month", $start_string);
 
                     $start_string = $end_time;
                 }
+
                 echo date('Y-m-d', $start_time).' - '.date('d F Y', $end_time).'<br>';
 
                 // query penjualan
