@@ -320,11 +320,20 @@
     
             /** Header */
             // set font
+            $start = $this->input->get('start');
+            $end = $this->input->get('end');
+
+            $tahun = date('Y');
+            if ( $start ) {
+
+                $tahun = date('Y', strtotime($start));
+            }
+            
             $pdf->SetFont('times', '', 14);
             $header = '
                 <div style="text-align: center">
                     <h4 style="margin: 0px">LAPORAN PENJUALAN</h4>
-                    <label>Rekapitulasi Penjualan Barang tahun '.date('Y').'</label>
+                    <label>Rekapitulasi Penjualan Barang tahun '.$tahun.'</label>
                 </div><br><br>';
             $pdf->writeHTMLCell(0, 0, '', '', $header, 0, 1, 0, true, '', true);
     
@@ -335,6 +344,45 @@
     
             
             $dt_penjualan =$this->Penjualan_model->ambil_penjualan_list_detail();
+
+            $data = array();
+            
+
+            if ( $start ) {
+
+                
+
+                $start = date('Y-m-d', strtotime($start));
+                $start = strtotime( $start );
+
+                $end = date('Y-m-d', strtotime($end));
+                $end = strtotime( $end );
+                foreach ( $dt_penjualan AS $isi ) {
+
+                    $tgl = date("Y-m-d", strtotime($isi->tgl_penjualan));
+                    $tgl = strtotime($tgl);
+                    if ( $start == $end ) {
+
+                        if ( $start == $tgl ) {
+
+                            array_push( $data, $isi );
+                        }
+
+                        
+                    } else {
+
+                        if ( ($start <= $tgl) && ($tgl <= $end) ) {
+
+                            array_push( $data, $isi );
+                        }
+
+                        
+                    }
+                }
+            } else {
+
+                $data = $dt_penjualan;
+            }
     
     
             $table_body = "";
@@ -342,7 +390,7 @@
     
             $nomor = 1;
             $total = 0;
-            foreach ( $dt_penjualan AS $row ) {
+            foreach ( $data AS $row ) {
                 
 
                 $total += ($row->harga_jual * $row->permintaan);
@@ -382,6 +430,7 @@
                     <td colspan="2">'.number_format($total).'</td>
                 </tr>
             </table>';
+
     
     
             // Print text using writeHTMLCell()

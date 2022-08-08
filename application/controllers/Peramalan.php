@@ -107,9 +107,11 @@
                 } else if ( $timeframe == "month" ) {
 
                     $start_time = $start_string;
-                    $end_time = strtotime("next month", $start_string);
 
-                    $start_string = $end_time;
+                    $end_month = date('Y-m-t', $start_time);
+                    $end_time = strtotime( $end_month );
+
+                    $start_string = strtotime("+1 day", $end_time);
                 }
 
                 echo date('Y-m-d', $start_time).' - '.date('d F Y', $end_time).'<br>';

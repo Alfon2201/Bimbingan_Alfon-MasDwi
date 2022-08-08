@@ -27,7 +27,7 @@
 				<div class="card-toolbar">
 					<!--begin::Dropdown-->
 					<div class="dropdown dropdown-inline mr-2">
-						<a href="<?php echo base_url('penjualan/laporan_penjualan') ?>" class="btn btn-light-primary font-weight-bolder">
+						<a data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary font-weight-bolder">
 							<span class="svg-icon svg-icon-md">
 								<!--begin::Svg Icon | path:/metronic/theme/html/demo13/dist/assets/media/svg/icons/Design/PenAndRuller.svg-->
 								<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -44,6 +44,38 @@
 								</svg>
 								<!--end::Svg Icon-->
 							</span>Export</a>
+
+						<!-- Modal-->
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+
+									<form action="<?php echo base_url('penjualan/laporan_penjualan') ?>" method="GET">
+									<div class="modal-body">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<i aria-hidden="true" class="ki ki-close"></i>
+										</button>
+
+										<h4>Cetak Berdasarkan</h4>
+										<label>Pilih tanggal dibawah ini untuk mencetak barang berdasarkan periode</label>
+										<div class="input-daterange input-group" id="kt_datepicker_5">
+                            									<input type="text" class="form-control" name="start" placeholder="Awal . . ." />
+                            									<div class="input-group-append">
+                            										<span class="input-group-text"><i
+                            												class="la la-ellipsis-h"></i></span>
+                            									</div>
+                            									<input type="text" class="form-control" name="end" placeholder="Akhir . . ." />
+                            								</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Batal</button>
+										<a href="<?php echo base_url('penjualan/laporan_penjualan') ?>" class="btn btn-light-primary btn-sm font-weight-bold">Menyeluruh</a>
+										<button type="submit" class="btn btn-primary btn-sm font-weight-bold">Cetak PDF</button>
+									</div>
+									</form>
+								</div>
+							</div>
+						</div>
 					
 					</div>
 					<!--end::Dropdown-->

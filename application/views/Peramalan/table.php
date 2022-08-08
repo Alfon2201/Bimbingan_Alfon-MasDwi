@@ -37,12 +37,12 @@
                             							<div class="form-group">
                             								<label for="">Interval Waktu Peramalan</label>
                             								<div class="input-daterange input-group" id="kt_datepicker_5">
-                            									<input type="text" class="form-control" name="start" />
+                            									<input type="text" class="form-control" name="start" placeholder="Awal . . ."/>
                             									<div class="input-group-append">
                             										<span class="input-group-text"><i
                             												class="la la-ellipsis-h"></i></span>
                             									</div>
-                            									<input type="text" class="form-control" name="end" />
+                            									<input type="text" class="form-control" name="end" placeholder="Akhir . . ."/>
                             								</div>
                             							</div>
                             						</div>
